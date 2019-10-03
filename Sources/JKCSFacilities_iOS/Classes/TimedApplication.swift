@@ -4,10 +4,11 @@ import UIKit
 #endif
 #endif
 
-class TimedApplication: UIApplication {
+public class TimedApplication: UIApplication {
+    private var userActivityTimeoutInSeconds: TimeInterval = 0
     private var idleTimer: Timer?
     
-    override init() {
+    private override init() {
         super.init()
         
         NotificationCenter.default.addObserver(self, selector: #selector(userDidBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
@@ -15,7 +16,12 @@ class TimedApplication: UIApplication {
         resetIdleTimer()
     }
     
-    override func sendEvent(_ event: UIEvent) {
+    public convenience init(userActivityTimeoutInSeconds: TimeInterval) {
+        self.init()
+        self.userActivityTimeoutInSeconds = userActivityTimeoutInSeconds
+    }
+    
+    override public func sendEvent(_ event: UIEvent) {
         super.sendEvent(event)
         
         if let touches = event.allTouches,
@@ -28,8 +34,8 @@ class TimedApplication: UIApplication {
         if let idleTimer = idleTimer {
             idleTimer.invalidate()
         }
-        if Preferences.userActivityTimeoutInSeconds > 0.01 {
-            idleTimer = Timer.scheduledTimer(timeInterval: Preferences.userActivityTimeoutInSeconds, target: self, selector: #selector(idleTimerExceeded), userInfo: nil, repeats: false)
+        if userActivityTimeoutInSeconds > 0.01 {
+            idleTimer = Timer.scheduledTimer(timeInterval: userActivityTimeoutInSeconds, target: self, selector: #selector(idleTimerExceeded), userInfo: nil, repeats: false)
         }
     }
     
