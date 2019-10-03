@@ -1,8 +1,4 @@
-#if os(iOS)
-#if canImport(UIKit)
 import UIKit
-#endif
-#endif
 
 public class TimedApplication: UIApplication {
     public static var userActivityTimeoutInSeconds: TimeInterval = 0

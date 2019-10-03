@@ -9,6 +9,7 @@
 import Foundation
 
 public extension Sequence {
+    
     func all(_ predicate: (Iterator.Element) -> Bool) -> Bool {
         return reduce(true) { $0 && predicate($1) }
     }
@@ -20,4 +21,5 @@ public extension Sequence {
     func none(_ predicate: (Iterator.Element) -> Bool) -> Bool {
         return !any(predicate)
     }
+    
 }

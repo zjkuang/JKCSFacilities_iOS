@@ -9,6 +9,7 @@
 import UIKit
 
 extension UIViewController {
+    
     open func addNotificationObservers() {
         NotificationCenter.default.addObserver(self, selector: #selector(applicationDidBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(applicationWillResignActive), name: UIApplication.willResignActiveNotification, object: nil)
@@ -36,4 +37,5 @@ extension UIViewController {
     
     @objc
     open func userDidBecomeActive() {}
+    
 }
