@@ -31,6 +31,10 @@ public class ReachabilityDetector: ObservableObject {
     
     private let reachability = Reachability()
     
+    public init() {
+        
+    }
+    
     public func start() {
         self.detectMode = .notification
         
