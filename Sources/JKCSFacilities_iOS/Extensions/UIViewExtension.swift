@@ -8,7 +8,7 @@
 
 import UIKit
 
-extension UIView {
+public extension UIView {
     @discardableResult
     func makeRound() -> UIView {
         layoutIfNeeded()

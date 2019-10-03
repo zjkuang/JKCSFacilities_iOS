@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension Notification.Name {
-    public static let userDidBecomeInactive = Notification.Name("userDidBecomeInactive")
-    public static let userDidBecomeActive = Notification.Name("userDidBecomeActive")
+public extension Notification.Name {
+    static let userDidBecomeInactive = Notification.Name("userDidBecomeInactive")
+    static let userDidBecomeActive = Notification.Name("userDidBecomeActive")
 }
