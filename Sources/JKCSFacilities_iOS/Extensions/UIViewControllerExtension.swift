@@ -8,8 +8,8 @@
 
 import UIKit
 
-public extension UIViewController {
-    func addNotificationObservers() {
+extension UIViewController {
+    open func addNotificationObservers() {
         NotificationCenter.default.addObserver(self, selector: #selector(applicationDidBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(applicationWillResignActive), name: UIApplication.willResignActiveNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(applicationDidEnterBackground), name: UIApplication.didEnterBackgroundNotification, object: nil)
@@ -20,20 +20,20 @@ public extension UIViewController {
     }
     
     @objc
-    func applicationDidBecomeActive() {}
+    open func applicationDidBecomeActive() {}
     
     @objc
-    func applicationWillResignActive() {}
+    open func applicationWillResignActive() {}
     
     @objc
-    func applicationDidEnterBackground() {}
+    open func applicationDidEnterBackground() {}
     
     @objc
-    func applicationWillEnterForeground() {}
+    open func applicationWillEnterForeground() {}
     
     @objc
-    func userDidBecomeInactive() {}
+    open func userDidBecomeInactive() {}
     
     @objc
-    func userDidBecomeActive() {}
+    open func userDidBecomeActive() {}
 }
