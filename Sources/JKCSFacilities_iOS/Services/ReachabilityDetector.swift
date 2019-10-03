@@ -35,6 +35,7 @@ public class ReachabilityDetector: ObservableObject {
         
     }
     
+    @discardableResult
     public func start() -> Self {
         self.detectMode = .notification
         
@@ -45,6 +46,7 @@ public class ReachabilityDetector: ObservableObject {
         return self
     }
     
+    @discardableResult
     public func start(onChange: @escaping (NetworkType) -> ()) ->Self {
         self.detectMode = .closure
         
@@ -90,6 +92,8 @@ public class ReachabilityDetector: ObservableObject {
         case .none:
             network = .disconnected
         }
+        
+        NotificationCenter.default.post(name: .reachabilityUpdated, object: nil)
     }
     
 }

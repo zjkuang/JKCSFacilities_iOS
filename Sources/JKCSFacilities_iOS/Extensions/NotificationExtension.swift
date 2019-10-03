@@ -13,4 +13,6 @@ public extension Notification.Name {
     static let userDidBecomeInactive = Notification.Name("userDidBecomeInactive")
     static let userDidBecomeActive = Notification.Name("userDidBecomeActive")
     
+    static let reachabilityUpdated = Notification.Name("reachabilityUpdated")
+    
 }
