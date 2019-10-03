@@ -5,7 +5,7 @@ import UIKit
 #endif
 
 public class TimedApplication: UIApplication {
-    private var userActivityTimeoutInSeconds: TimeInterval = 0
+    public static var userActivityTimeoutInSeconds: TimeInterval = 0
     private var idleTimer: Timer?
     
     private override init() {
@@ -14,11 +14,6 @@ public class TimedApplication: UIApplication {
         NotificationCenter.default.addObserver(self, selector: #selector(userDidBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
         
         resetIdleTimer()
-    }
-    
-    public convenience init(userActivityTimeoutInSeconds: TimeInterval) {
-        self.init()
-        self.userActivityTimeoutInSeconds = userActivityTimeoutInSeconds
     }
     
     override public func sendEvent(_ event: UIEvent) {
@@ -34,8 +29,8 @@ public class TimedApplication: UIApplication {
         if let idleTimer = idleTimer {
             idleTimer.invalidate()
         }
-        if userActivityTimeoutInSeconds > 0.01 {
-            idleTimer = Timer.scheduledTimer(timeInterval: userActivityTimeoutInSeconds, target: self, selector: #selector(idleTimerExceeded), userInfo: nil, repeats: false)
+        if Self.userActivityTimeoutInSeconds > 0.01 {
+            idleTimer = Timer.scheduledTimer(timeInterval: Self.userActivityTimeoutInSeconds, target: self, selector: #selector(idleTimerExceeded), userInfo: nil, repeats: false)
         }
     }
     
