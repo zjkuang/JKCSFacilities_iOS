@@ -1,3 +1,7 @@
-public struct JKCSFacilities_iOS {
+struct JKCSFacilities_iOS {
+    var text = "Hello, World!"
+}
+
+public class JKCSFacilitiesTestClass {
     var text = "Hello, World!"
 }
