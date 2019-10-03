@@ -1,5 +1,5 @@
 public struct JKCSFacilities_iOS {
-    var text = "Hello, World!"
+    public var text = "Hello, World!"
     
     public init() {
         
@@ -7,7 +7,7 @@ public struct JKCSFacilities_iOS {
 }
 
 public class JKCSFacilitiesTestClass {
-    var text = "Hello, World!"
+    public var text = "Hello, World!"
     
     public init() {
         
