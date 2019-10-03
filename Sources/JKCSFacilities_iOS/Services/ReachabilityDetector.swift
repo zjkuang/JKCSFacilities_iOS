@@ -35,15 +35,17 @@ public class ReachabilityDetector: ObservableObject {
         
     }
     
-    public func start() {
+    public func start() -> Self {
         self.detectMode = .notification
         
         NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(notification:)), name: .reachabilityChanged, object: reachability)
         
         startNotifier()
+        
+        return self
     }
     
-    public func start(onChange: @escaping (NetworkType) -> ()) {
+    public func start(onChange: @escaping (NetworkType) -> ()) ->Self {
         self.detectMode = .closure
         
         reachability?.whenReachable = { reachability in
@@ -62,6 +64,8 @@ public class ReachabilityDetector: ObservableObject {
         }
         
         startNotifier()
+        
+        return self
     }
     
     private func startNotifier() {
