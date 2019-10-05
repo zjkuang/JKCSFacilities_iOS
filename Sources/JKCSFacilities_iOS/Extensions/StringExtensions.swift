@@ -14,4 +14,12 @@ public extension String {
         return (str != nil) && (str! != "")
     }
     
+    @discardableResult mutating func append(str: String, separator: String) -> String {
+        if self != "" {
+            self += separator
+        }
+        self += str
+        return self
+    }
+    
 }
