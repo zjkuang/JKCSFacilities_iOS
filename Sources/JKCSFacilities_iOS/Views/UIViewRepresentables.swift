@@ -10,6 +10,10 @@ import SwiftUI
 public struct ActivityIndicatorView: UIViewRepresentable {
     public var uiActivityIndicatorView = UIActivityIndicatorView()
     
+    public init() {
+        
+    }
+    
     public func makeUIView(context: Context) -> UIActivityIndicatorView {
         return UIActivityIndicatorView()
     }
