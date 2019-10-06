@@ -21,7 +21,7 @@ public class RESTfulService {
         
     }
     
-    public func get<T: Decodable>(urlString: String, headers: [String: String]? = nil, respondObjectType: T) -> AnyPublisher<T, JKCS_RESTful_Error> {
+    public func get<T: Decodable>(urlString: String, headers: [String: String]? = nil, respondObjectType: T.Type) -> AnyPublisher<T, JKCS_RESTful_Error> {
         guard let url = URL(string: urlString) else {
             fatalError("Invalid URL: \(urlString)")
         }
