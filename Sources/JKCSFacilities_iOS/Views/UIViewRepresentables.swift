@@ -15,18 +15,20 @@ public struct ActivityIndicatorView: UIViewRepresentable {
     }
     
     public func makeUIView(context: Context) -> UIActivityIndicatorView {
-        return UIActivityIndicatorView()
+        return uiActivityIndicatorView
     }
     
     public func updateUIView(_ uiView: UIActivityIndicatorView, context: Context) {
         
     }
     
-    public func startAnimating() {
+    public func startAnimating() -> Self {
         uiActivityIndicatorView.startAnimating()
+        return self
     }
     
-    public func stopAnimating() {
+    public func stopAnimating() -> Self {
         uiActivityIndicatorView.stopAnimating()
+        return self
     }
 }
