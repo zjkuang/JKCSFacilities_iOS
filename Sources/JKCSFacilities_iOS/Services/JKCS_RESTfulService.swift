@@ -27,6 +27,7 @@ public class JKCS_RESTfulService: ObservableObject {
     private var JKCS_RESTfulServiceCounter: Int = 0 {
         didSet {
             JKCS_RESTfulServiceRunning = (JKCS_RESTfulServiceCounter > 0)
+            print("*** JKCS_RESTfulServiceCounter = \(JKCS_RESTfulServiceCounter), JKCS_RESTfulServiceRunning: \(JKCS_RESTfulServiceRunning ? "true" : "false")")
         }
     }
     
