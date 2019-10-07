@@ -21,13 +21,9 @@ public struct JKCS_RESTfulServiceExampleIPJSONTestCom: Decodable {
 
 fileprivate var JKCS_RESTfulServiceExampleRESTfulTest: AnyCancellable?
 
-/**
- * Can be used as environmentObject for showing/removing activityIndicator
- */
-public var JKCS_RESTfulServiceRunning = false
-
-public class JKCS_RESTfulService {
+public class JKCS_RESTfulService: ObservableObject {
     
+    @Published public var JKCS_RESTfulServiceRunning = false
     private var JKCS_RESTfulServiceCounter: Int = 0 {
         didSet {
             JKCS_RESTfulServiceRunning = (JKCS_RESTfulServiceCounter > 0)
