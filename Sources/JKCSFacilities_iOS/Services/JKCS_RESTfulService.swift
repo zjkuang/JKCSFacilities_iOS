@@ -15,10 +15,47 @@ public enum JKCS_RESTful_Error: String, Error {
     case httpStatusError = "HTTP status code error"
 }
 
-public class RESTfulService {
+public struct JKCS_RESTfulServiceExampleIPJSONTestCom: Decodable {
+    let ip: String
+}
+
+fileprivate var JKCS_RESTfulServiceExampleRESTfulTest: AnyCancellable?
+
+/**
+ * Can be used as environmentObject for showing/removing activityIndicator
+ */
+public var JKCS_RESTfulServiceRunning = false
+
+public class JKCS_RESTfulService {
+    
+    private var JKCS_RESTfulServiceCounter: Int = 0 {
+        didSet {
+            JKCS_RESTfulServiceRunning = (JKCS_RESTfulServiceCounter > 0)
+        }
+    }
     
     public init() {
         
+    }
+    
+    public func example(completionHandler: @escaping (Result<JKCS_RESTfulServiceExampleIPJSONTestCom, JKCS_RESTful_Error>) -> ()) {
+        let urlString = "http://ip.jsontest.com/"
+        JKCS_RESTfulServiceExampleRESTfulTest = JKCS_RESTfulService().get(urlString: urlString, respondObjectType: JKCS_RESTfulServiceExampleIPJSONTestCom.self)
+            .receive(on: RunLoop.main)
+            .sink(receiveCompletion: { completion in
+                JKCS_RESTfulServiceExampleRESTfulTest = nil
+                switch completion {
+                case .failure(let error):
+                    print("RESTfulService().example() test failed: \(urlString) \(error.localizedDescription)")
+                    completionHandler(Result.failure(error))
+                    break
+                case .finished:
+                    break
+                }
+            }, receiveValue: { ipJSONTestCom in
+                print("RESTfulService().example() test succeeded: \(ipJSONTestCom.ip)")
+                completionHandler(Result.success(ipJSONTestCom))
+            })
     }
     
     public func get<T: Decodable>(urlString: String, headers: [String: String]? = nil, respondObjectType: T.Type) -> AnyPublisher<T, JKCS_RESTful_Error> {
@@ -32,8 +69,10 @@ public class RESTfulService {
             request.allHTTPHeaderFields = headers
         }
         
+        increamentCounter()
         return URLSession.shared.dataTaskPublisher(for: request)
             .tryMap { (data, response) -> Data in
+                self.decreamentCounter()
                 guard let httpResponse = response as? HTTPURLResponse else {
                     throw JKCS_RESTful_Error.invalidResponse
                 }
@@ -70,8 +109,10 @@ public class RESTfulService {
             request.allHTTPHeaderFields = headers
         }
         
+        increamentCounter()
         return URLSession.shared.dataTaskPublisher(for: request)
             .tryMap { (data, response) -> Data in
+                self.decreamentCounter()
                 guard let httpResponse = response as? HTTPURLResponse else {
                     throw JKCS_RESTful_Error.invalidResponse
                 }
@@ -108,8 +149,10 @@ public class RESTfulService {
             request.allHTTPHeaderFields = headers
         }
         
+        increamentCounter()
         return URLSession.shared.dataTaskPublisher(for: request)
             .tryMap { (data, response) -> Data in
+                self.decreamentCounter()
                 guard let httpResponse = response as? HTTPURLResponse else {
                     throw JKCS_RESTful_Error.invalidResponse
                 }
@@ -146,8 +189,10 @@ public class RESTfulService {
             request.allHTTPHeaderFields = headers
         }
         
+        increamentCounter()
         return URLSession.shared.dataTaskPublisher(for: request)
             .tryMap { (data, response) -> Data in
+                self.decreamentCounter()
                 guard let httpResponse = response as? HTTPURLResponse else {
                     throw JKCS_RESTful_Error.invalidResponse
                 }
@@ -179,8 +224,10 @@ public class RESTfulService {
             request.allHTTPHeaderFields = headers
         }
         
+        increamentCounter()
         return URLSession.shared.dataTaskPublisher(for: request)
             .tryMap { (data, response) -> Data in
+                self.decreamentCounter()
                 guard let httpResponse = response as? HTTPURLResponse else {
                     throw JKCS_RESTful_Error.invalidResponse
                 }
@@ -199,6 +246,33 @@ public class RESTfulService {
                 return .genericError
             }
             .eraseToAnyPublisher()
+    }
+    
+}
+
+public extension JKCS_RESTfulService {
+    
+    private func increamentCounter() {
+        DispatchQueue.main.async {
+            if self.JKCS_RESTfulServiceCounter < 0 {
+                self.JKCS_RESTfulServiceCounter = 0
+            }
+            self.JKCS_RESTfulServiceCounter += 1
+        }
+    }
+    
+    private func decreamentCounter() {
+        DispatchQueue.main.async {
+            if self.JKCS_RESTfulServiceCounter > 0 {
+                self.JKCS_RESTfulServiceCounter -= 1
+            }
+        }
+    }
+    
+    func resetServiceCounter() {
+        DispatchQueue.main.async {
+            self.JKCS_RESTfulServiceCounter = 0
+        }
     }
     
 }
