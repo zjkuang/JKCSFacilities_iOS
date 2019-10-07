@@ -16,7 +16,7 @@ public enum JKCS_RESTful_Error: String, Error {
 }
 
 public struct JKCS_RESTfulServiceExampleIPJSONTestCom: Decodable {
-    let ip: String
+    public let ip: String
 }
 
 fileprivate var JKCS_RESTfulServiceExampleRESTfulTest: AnyCancellable?
