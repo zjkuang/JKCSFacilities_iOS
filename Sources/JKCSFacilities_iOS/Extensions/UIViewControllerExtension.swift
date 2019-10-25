@@ -18,6 +18,8 @@ extension UIViewController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(userDidBecomeInactive), name: Notification.Name.userDidBecomeInactive, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(userDidBecomeActive), name: Notification.Name.userDidBecomeActive, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(orientationDidChange), name: UIDevice.orientationDidChangeNotification, object: nil)
     }
     
     @objc
@@ -37,5 +39,8 @@ extension UIViewController {
     
     @objc
     open func userDidBecomeActive() {}
+    
+    @objc
+    open func orientationDidChange() {}
     
 }
