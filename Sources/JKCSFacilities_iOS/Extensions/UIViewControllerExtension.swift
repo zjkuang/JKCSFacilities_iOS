@@ -20,15 +20,20 @@ extension UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(userDidBecomeActive), name: Notification.Name.userDidBecomeActive, object: nil)
         
         view.addObserver(self, forKeyPath: #keyPath(UIView.bounds), options: .new, context: nil)
+        view.addObserver(self, forKeyPath: #keyPath(UIView.frame), options: .new, context: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(orientationDidChange), name: UIDevice.orientationDidChangeNotification, object: nil)
     }
     
     override open func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         if let objectView = object as? UIView,
-            objectView === view,
-            keyPath == #keyPath(UIView.bounds) {
-            viewBoundsDidChange()
+            objectView === view {
+            if keyPath == #keyPath(UIView.bounds) {
+                viewBoundsDidChange()
+            }
+            else if keyPath == #keyPath(UIView.frame) {
+                viewFrameDidChange()
+            }
         }
     }
     
@@ -52,6 +57,9 @@ extension UIViewController {
     
     @objc
     open func viewBoundsDidChange() {}
+    
+    @objc
+    open func viewFrameDidChange() {}
     
     @objc
     open func orientationDidChange() {}
