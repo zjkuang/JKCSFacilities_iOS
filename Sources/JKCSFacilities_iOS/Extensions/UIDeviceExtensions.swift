@@ -84,5 +84,30 @@ public extension UIDevice {
 
         return mapToDevice(identifier: identifier)
     }()
+    
+    static func isPad() -> Bool {
+        return (UIDevice.current.userInterfaceIdiom == .pad)
+    }
+    
+    static func isPhone() -> Bool {
+        return (UIDevice.current.userInterfaceIdiom == .phone)
+    }
+    
+    func currentInterfaceOrientation() -> UIInterfaceOrientation {
+        if let interfaceOrientation = UIApplication.shared.windows.first(where: { $0.isKeyWindow })?.windowScene?.interfaceOrientation {
+            return interfaceOrientation
+        }
+        else {
+            return .unknown
+        }
+    }
+    
+    func isPortrait() -> Bool {
+        return currentInterfaceOrientation().isPortrait
+    }
+    
+    func isLandscape() -> Bool {
+        return currentInterfaceOrientation().isLandscape
+    }
 
 }
