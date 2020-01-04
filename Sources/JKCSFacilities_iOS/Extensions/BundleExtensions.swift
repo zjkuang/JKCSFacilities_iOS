@@ -9,15 +9,15 @@ import Foundation
 
 public extension Bundle {
     
-    var displayName: String? {
+    func displayName() -> String? {
         return object(forInfoDictionaryKey: "CFBundleDisplayName") as? String ?? object(forInfoDictionaryKey: "CFBundleName") as? String
     }
     
-    var releaseVersionNumber: String? {
+    func releaseVersionNumber() -> String? {
         return object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String
     }
     
-    var buildVersionNumber: String? {
+    func buildVersionNumber() -> String? {
         return object(forInfoDictionaryKey: "CFBundleVersion") as? String
     }
     
