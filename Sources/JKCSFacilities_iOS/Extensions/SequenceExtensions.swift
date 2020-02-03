@@ -1,5 +1,5 @@
 //
-//  SequenceExtension.swift
+//  SequenceExtensions.swift
 //  MyLabAWS
 //
 //  Created by Zhengqian Kuang on 2019-09-04.

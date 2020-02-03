@@ -1,5 +1,5 @@
 //
-//  UIViewExtension.swift
+//  UIViewExtensions.swift
 //  MyLab
 //
 //  Created by Zhengqian Kuang on 2019-09-05.

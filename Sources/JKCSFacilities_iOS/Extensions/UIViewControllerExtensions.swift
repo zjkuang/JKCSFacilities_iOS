@@ -1,5 +1,5 @@
 //
-//  UIViewControllerExtension.swift
+//  UIViewControllerExtensions.swift
 //  MyLabAWS
 //
 //  Created by Zhengqian Kuang on 2019-09-04.
@@ -64,4 +64,19 @@ extension UIViewController {
     @objc
     open func orientationDidChange() {}
     
+}
+
+extension UIViewController {
+    func alert(withTitle title: String?, message: String?, actions: [String], actionHandler: @escaping (String?) -> (), style: UIAlertController.Style) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: style)
+        for sAction in actions {
+            let alertAction = UIAlertAction(title: sAction, style: .default) { (alertAction) in
+                actionHandler(alertAction.title)
+            }
+            alertController.addAction(alertAction)
+        }
+        self.present(alertController, animated: true, completion: {
+            //
+        })
+    }
 }
