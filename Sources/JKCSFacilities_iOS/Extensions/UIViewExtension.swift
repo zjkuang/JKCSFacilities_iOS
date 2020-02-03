@@ -24,4 +24,13 @@ public extension UIView {
         return self
     }
     
+    func absolutePosition(to outerView: UIView? = nil) -> CGPoint {
+        var absolutePosition = CGPoint(x: 0, y: 0)
+        if self.superview != nil {
+            let window = UIApplication.shared.windows.filter {$0.isKeyWindow}.first
+            absolutePosition = self.superview!.convert(self.frame.origin, to: outerView ?? window?.rootViewController?.view)
+        }
+        return absolutePosition
+    }
+    
 }
