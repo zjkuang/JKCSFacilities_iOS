@@ -66,7 +66,7 @@ extension UIViewController {
     
 }
 
-extension UIViewController {
+public extension UIViewController {
     func alert(withTitle title: String?, message: String?, actions: [String], actionHandler: @escaping (String?) -> (), style: UIAlertController.Style) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: style)
         for sAction in actions {
