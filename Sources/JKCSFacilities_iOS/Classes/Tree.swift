@@ -15,4 +15,11 @@ public class TreeNode {
     init(myself: Any) {
         self.myself = myself
     }
+    
+    public func iterateThroughDecendants(block: (TreeNode) -> Void) {
+        for immediateChild in immediateChildren {
+            block(immediateChild)
+            immediateChild.iterateThroughDecendants(block: block)
+        }
+    }
 }
