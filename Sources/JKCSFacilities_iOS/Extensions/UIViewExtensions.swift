@@ -8,6 +8,8 @@
 
 import UIKit
 
+// MARK: - Appearance
+
 public extension UIView {
     
     @discardableResult
@@ -24,6 +26,12 @@ public extension UIView {
         return self
     }
     
+}
+
+// MARK: - Position
+
+public extension UIView {
+    
     func absolutePosition(to outerView: UIView? = nil) -> CGPoint {
         var absolutePosition = CGPoint(x: 0, y: 0)
         if self.superview != nil {
@@ -31,6 +39,26 @@ public extension UIView {
             absolutePosition = self.superview!.convert(self.frame.origin, to: outerView ?? window?.rootViewController?.view)
         }
         return absolutePosition
+    }
+    
+}
+
+// MARK: - Hierarchy
+
+public extension UIView {
+    
+    func hierarchy(parent: TreeNode? = nil) -> TreeNode {
+        let myNode = TreeNode(myself: self)
+        myNode.myself = self
+        myNode.parent = parent
+        for subview in self.subviews {
+            if subview.superview != self {
+                continue;
+            }
+            let subnode = subview.hierarchy(parent: myNode)
+            myNode.immediateChildren.append(subnode)
+        }
+        return myNode
     }
     
 }
