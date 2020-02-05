@@ -37,7 +37,7 @@ public class JKCS_DataTask: NSObject {
         return uuidString
     }
     
-    public func dataTask(method: HTTP_Method, sURL: String, headers dictHeaders: Dictionary<String, String>?, body dictBody: Dictionary<String, String>?, completion: @escaping (Dictionary<String, Any>?, URLResponse?, Error?) -> ()) {
+    public func dataTask(method: HTTP_Method, sURL: String, headers dictHeaders: Dictionary<String, String>?, body dictBody: Dictionary<String, String>?, completionHandler: @escaping (_ dictResponse: Dictionary<String, Any>?, _ urlResponse: URLResponse?, _ error: Error?) -> ()) {
         let url = URL(string: sURL)
         if url != nil {
             // URLSession.shared.dataTask(with: url!, completionHandler: completion).resume()
@@ -68,15 +68,15 @@ public class JKCS_DataTask: NSObject {
                                 let data = data,
                                 let jsonData = try? JSONSerialization.jsonObject(with: data, options: .mutableContainers) {
                                 let dictResponse = ["__RESPONSE__": jsonData]
-                                completion(dictResponse, urlResponse, error)
+                                completionHandler(dictResponse, urlResponse, error)
                             } else {
                                 let dictResponse = ["__FAILURE__": "Response abnormal. Discarded."]
-                                completion(dictResponse, urlResponse, error)
+                                completionHandler(dictResponse, urlResponse, error)
                             }
                         }
                         else {
                             let dictResponse = ["__CANCELLED__": "DataTask's owner is not active. Response discarded."]
-                            completion(dictResponse, urlResponse, error)
+                            completionHandler(dictResponse, urlResponse, error)
                         }
                     })}.resume()
             }
