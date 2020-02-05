@@ -20,7 +20,7 @@ public class JKCS_DataTask: NSObject {
         case DELETE = "DELETE"
     }
     
-    public static let debug_resonse_delay: Int = 0 // to add an extra delay onto response time
+    public var debug_resonse_delay: Int = 0 // to add an extra delay onto response time
     
     private weak var owner: AnyObject?
     public var ownerState: OwnerState = .undefined
@@ -60,7 +60,7 @@ public class JKCS_DataTask: NSObject {
                 let dataTaskId = JKCS_DataTask.newDataTaskId()
                 JKCS_DataTask.mainThread_dataTaskWillStart(byOwner: self.owner, withDataTaskId: dataTaskId)
                 _ = URLSession.shared.dataTask(with: request) { (data, urlResponse, error) in
-                    DispatchQueue.main.asyncAfter(deadline: (.now() + .seconds(JKCS_DataTask.debug_resonse_delay)), execute: {
+                    DispatchQueue.main.asyncAfter(deadline: (.now() + .seconds(self.debug_resonse_delay)), execute: {
                         let owner = JKCS_DataTask.dictDataTasks[dataTaskId]
                         JKCS_DataTask.mainThread_dataTaskDidEnd(withDataTaskId: dataTaskId)
                         if (owner != nil) && (self.ownerState == .active) {
