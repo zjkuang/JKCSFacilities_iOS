@@ -37,7 +37,7 @@ public class JKCS_DataTask: NSObject {
         return uuidString
     }
     
-    public func dataTask(method: HTTP_Method, sURL: String, headers dictHeaders: Dictionary<String, String>?, body dictBody: Dictionary<String, String>?, completionHandler: @escaping (_ dictResponse: Dictionary<String, Any>?, _ urlResponse: URLResponse?, _ error: Error?) -> ()) {
+    public func dataTask(method: HTTP_Method, sURL: String, headers dictHeaders: Dictionary<String, String>?, body dictBody: Dictionary<String, String>?, completionHandler: @escaping (Dictionary<String, Any>?, URLResponse?, Error?) -> ()) {
         let url = URL(string: sURL)
         if url != nil {
             // URLSession.shared.dataTask(with: url!, completionHandler: completion).resume()
