@@ -37,7 +37,7 @@ public class JKCS_DataTask: NSObject {
         return uuidString
     }
     
-    public func dataTask(method: HTTP_Method, sURL: String, headers dictHeaders: Dictionary<String, String>?, body dictBody: Dictionary<String, String>?, completionHandler: @escaping (Dictionary<String, Any>?, URLResponse?, Error?) -> ()) {
+    public func dataTask(method: HTTP_Method, sURL: String, headers dictHeaders: Dictionary<String, String>?, body dictBody: Dictionary<String, Any>?, completionHandler: @escaping (Dictionary<String, Any>?, URLResponse?, Error?) -> ()) {
         let url = URL(string: sURL)
         if url != nil {
             // URLSession.shared.dataTask(with: url!, completionHandler: completion).resume()
@@ -75,8 +75,7 @@ public class JKCS_DataTask: NSObject {
                             }
                         }
                         else {
-                            let dictResponse = ["__CANCELLED__": "DataTask's owner is not active. Response discarded."]
-                            completionHandler(dictResponse, urlResponse, error)
+                            print("DataTask's owner is not active. Response discarded.")
                         }
                     })}.resume()
             }
