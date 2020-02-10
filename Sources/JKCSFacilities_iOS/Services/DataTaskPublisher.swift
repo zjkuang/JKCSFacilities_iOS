@@ -24,6 +24,11 @@ public class DataTaskPublisher {
         case DELETE = "DELETE"
     }
     
+    // This is necessary
+    public init() {
+        
+    }
+    
     public func dataTaskPublisher(method: HTTP_Method, url: String, headers: Dictionary<String, String>?, body: Dictionary<String, Any>?) -> AnyPublisher<Any, Error> {
         guard let url = URL(string: url) else {
             return Fail(error: DataTaskError.invalidURL).eraseToAnyPublisher()
