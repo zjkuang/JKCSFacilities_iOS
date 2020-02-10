@@ -8,8 +8,8 @@
 import Foundation
 import Combine
 
-class DataTaskPublisher {
-    enum DataTaskError: Error {
+public class DataTaskPublisher {
+    public enum DataTaskError: Error {
         case genericError
         case invalidURL
         case invalidResponse
@@ -24,7 +24,7 @@ class DataTaskPublisher {
         case DELETE = "DELETE"
     }
     
-    func dataTaskPublisher(method: HTTP_Method, url: String, headers: Dictionary<String, String>?, body: Dictionary<String, Any>?) -> AnyPublisher<Any, Error> {
+    public func dataTaskPublisher(method: HTTP_Method, url: String, headers: Dictionary<String, String>?, body: Dictionary<String, Any>?) -> AnyPublisher<Any, Error> {
         guard let url = URL(string: url) else {
             return Fail(error: DataTaskError.invalidURL).eraseToAnyPublisher()
         }
