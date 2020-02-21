@@ -28,21 +28,6 @@ public extension UIView {
     
 }
 
-// MARK: - Position
-
-public extension UIView {
-    
-    func absolutePosition(to outerView: UIView? = nil) -> CGPoint {
-        var absolutePosition = CGPoint(x: 0, y: 0)
-        if self.superview != nil {
-            let window = UIApplication.shared.windows.filter {$0.isKeyWindow}.first
-            absolutePosition = self.superview!.convert(self.frame.origin, to: outerView ?? window?.rootViewController?.view)
-        }
-        return absolutePosition
-    }
-    
-}
-
 // MARK: - Hierarchy
 
 public extension UIView {
@@ -59,6 +44,34 @@ public extension UIView {
             myNode.immediateChildren.append(subnode)
         }
         return myNode
+    }
+    
+}
+
+// MARK: - Image
+
+public extension UIView {
+    func image() -> UIImage {
+        // https://www.hackingwithswift.com/example-code/media/how-to-render-a-uiview-to-a-uiimage
+        let renderer = UIGraphicsImageRenderer(size: bounds.size)
+        let image = renderer.image { (context) in
+            self.drawHierarchy(in: self.bounds, afterScreenUpdates: true)
+        }
+        return image
+    }
+}
+
+// MARK: - Position
+
+public extension UIView {
+    
+    func absolutePosition(to outerView: UIView? = nil) -> CGPoint {
+        var absolutePosition = CGPoint(x: 0, y: 0)
+        if self.superview != nil {
+            let window = UIApplication.shared.windows.filter {$0.isKeyWindow}.first
+            absolutePosition = self.superview!.convert(self.frame.origin, to: outerView ?? window?.rootViewController?.view)
+        }
+        return absolutePosition
     }
     
 }
