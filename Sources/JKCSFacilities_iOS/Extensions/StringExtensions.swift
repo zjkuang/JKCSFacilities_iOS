@@ -22,4 +22,15 @@ public extension String {
         return self
     }
     
+    func strikeThru() -> String { // https://gist.github.com/joltguy/d7f8ea304c30c492c2257f9c9f7acba3
+        var struck = ""
+        let strikeChar: Character = "\u{0336}"
+        self.forEach { (char) in
+            var xchar = UnicodeScalarView(char.unicodeScalars)
+            xchar.append(strikeChar.unicodeScalars.first!)
+            struck.append(String(xchar))
+        }
+        return struck
+    }
+    
 }
