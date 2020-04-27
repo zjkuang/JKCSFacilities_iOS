@@ -19,7 +19,7 @@ public protocol PersistentStoreProtocol: Encodable, Decodable {
     // When .keychain is specified, KeychainAccess requires a service string. Caller can specify the service string, or, if omitted, a fixed value serviceUUID will be applied.
     func save(storage: PersistentStorageType, key: String?, service: String?, completionHandler: @escaping (Result<String, JKCSError>) -> ())
     
-    static func retrieve<T: PersistentStoreProtocol>(storage: PersistentStorageType, key: String, service: String?, completionHandler: @escaping (Result<T, JKCSError>) -> ())
+    static func retrieve<T: PersistentStoreProtocol>(storage: PersistentStorageType, key: String, service: String?, completionHandler: @escaping (Result<T?, JKCSError>) -> ())
     
     static func clearFromStorage(storage: PersistentStorageType, key: String, service: String?, completionHandler: @escaping (Result<ExpressibleByNilLiteral?, JKCSError>) -> ())
 }
