@@ -8,6 +8,12 @@
 
 import UIKit
 
+#if TARGET_OS_SIMULATOR
+    public let isSimulator = true
+#else
+    public let isSimulator = false
+#endif
+
 public extension UIDevice {
     
     // https://stackoverflow.com/a/26962452/7455975
