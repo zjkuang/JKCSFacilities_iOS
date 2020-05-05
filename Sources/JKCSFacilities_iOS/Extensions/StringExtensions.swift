@@ -10,7 +10,7 @@ import Foundation
 
 public extension String {
     
-    static func isValid(str: String?) -> Bool {
+    static func isValid(_ str: String?) -> Bool {
         return (str != nil) && (str! != "")
     }
     
