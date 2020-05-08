@@ -31,14 +31,4 @@ public struct ActivityIndicatorView: UIViewRepresentable {
         uiActivityIndicatorView.stopAnimating()
         return self
     }
-    
-    public func indicator(activated: Bool) -> Self {
-        if activated {
-            uiActivityIndicatorView.startAnimating()
-        }
-        else {
-            uiActivityIndicatorView.stopAnimating()
-        }
-        return self
-    }
 }
