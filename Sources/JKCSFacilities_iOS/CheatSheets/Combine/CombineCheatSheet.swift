@@ -29,15 +29,15 @@ public class CombineCheatSheet {
         public var message: String {
             switch self {
             case .modelErrorInvalidInput:
-                return "Invalid input"
+                return "(Model) Invalid input"
             case .modelErrorRemoteFailure:
-                return "Remote failure"
+                return "(Model) Remote failure"
             }
         }
     }
 
     public enum ViewModelResponse: String {
-        case immediateViewModelResponse = "Immediate value"
+        case immediateViewModelResponse = "(Viewmodel) Immediate value"
         case asynchronousViewModelResponse = "Fetched from remote server"
     }
 
@@ -48,9 +48,9 @@ public class CombineCheatSheet {
         public var message: String {
             switch self {
             case .viewModelErrorInvalidInput:
-                return "Invalid input"
+                return "(Viewmodel) Invalid input"
             case .viewModelErrorModelFailure(let code):
-                return "Model failure (code \(code)"
+                return "(Viewmodel) Model failure (code \(code))"
             }
         }
     }
@@ -88,11 +88,11 @@ public class CombineCheatSheet {
 
     public func viewModelRequest(expectation: Expectation) -> AnyPublisher<ViewModelResponse, ViewModelError> {
         switch expectation {
-        case .immediateViewModelAnswerExpected:
-            return Just<ViewModelResponse>(.immediateViewModelResponse).setFailureType(to: ViewModelError.self).eraseToAnyPublisher()
         case .immediateViewModelFailureExpected:
             return Fail<ViewModelResponse, ViewModelError>(error: .viewModelErrorInvalidInput).eraseToAnyPublisher()
-        case .asynchronousAnswerExpected, .asynchronousFailureExpected:
+        case .immediateViewModelAnswerExpected:
+            return Just<ViewModelResponse>(.immediateViewModelResponse).setFailureType(to: ViewModelError.self).eraseToAnyPublisher()
+        case .immediateModelFailureExpected, .immediateModelAnswerExpected, .asynchronousFailureExpected, .asynchronousAnswerExpected:
             return modelRequest(expectation: expectation)
                 .map { (modelResponse) -> ViewModelResponse in
                     switch modelResponse {
@@ -107,8 +107,6 @@ public class CombineCheatSheet {
                 }
             }
             .eraseToAnyPublisher()
-        default:
-            return Fail<ViewModelResponse, ViewModelError>(error: .viewModelErrorInvalidInput).eraseToAnyPublisher()
         }
     }
 }
