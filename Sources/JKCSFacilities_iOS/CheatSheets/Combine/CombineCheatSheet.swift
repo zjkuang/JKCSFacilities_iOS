@@ -29,16 +29,16 @@ public class CombineCheatSheet {
         public var message: String {
             switch self {
             case .modelErrorInvalidInput:
-                return "(Model) Invalid input"
+                return "(model) Invalid input"
             case .modelErrorRemoteFailure:
-                return "(Model) Remote failure"
+                return "(model) Remote failure"
             }
         }
     }
 
     public enum ViewModelResponse: String {
-        case immediateViewModelResponse = "(Viewmodel) Immediate value"
-        case asynchronousViewModelResponse = "Fetched from remote server"
+        case immediateViewModelResponse = "(viewmodel) Immediate value"
+        case asynchronousViewModelResponse = "(viewmodel) Fetched from model"
     }
 
     public enum ViewModelError: Error {
@@ -48,9 +48,9 @@ public class CombineCheatSheet {
         public var message: String {
             switch self {
             case .viewModelErrorInvalidInput:
-                return "(Viewmodel) Invalid input"
+                return "(viewmodel) Invalid input"
             case .viewModelErrorModelFailure(let code):
-                return "(Viewmodel) Model failure (code \(code))"
+                return "(viewmodel) Model failure (code \(code))"
             }
         }
     }
@@ -108,5 +108,93 @@ public class CombineCheatSheet {
             }
             .eraseToAnyPublisher()
         }
+    }
+}
+
+public class TestCombineCheatSheet {
+    private var combineCheatSheet = CombineCheatSheet()
+    private var immediateViewModelFailureExpected: AnyCancellable?
+    private var immediateViewModelAnswerExpected: AnyCancellable?
+    private var immediateModelFailureExpected: AnyCancellable?
+    private var immediateModelAnswerExpected: AnyCancellable?
+    private var asynchronousFailureExpected: AnyCancellable?
+    private var asynchronousAnswerExpected: AnyCancellable?
+    
+    public init() {
+        
+    }
+    
+    public func test() {
+        immediateViewModelFailureExpected = combineCheatSheet.viewModelRequest(expectation: .immediateViewModelFailureExpected)
+            .sink(receiveCompletion: { (completion) in
+                switch completion {
+                case .failure(let error): // CombineCheatSheet.ViewModelError
+                    print("immediateViewModelFailureExpected failed. \(error.message)")
+                case .finished:
+                    self.immediateViewModelFailureExpected = nil
+                }
+            }, receiveValue: { (_) in // CombineCheatSheet.ViewModelResponse
+                
+            })
+        
+        immediateViewModelAnswerExpected = combineCheatSheet.viewModelRequest(expectation: .immediateViewModelAnswerExpected)
+            .sink(receiveCompletion: { (completion) in
+                switch completion {
+                case .failure(_): // CombineCheatSheet.ViewModelError
+                    break
+                case .finished:
+                    self.immediateViewModelAnswerExpected = nil
+                }
+            }, receiveValue: { (response) in // CombineCheatSheet.ViewModelResponse
+                print("immediateViewModelAnswerExpected: \(response.rawValue)")
+            })
+            
+        immediateModelFailureExpected = combineCheatSheet.viewModelRequest(expectation: .immediateModelFailureExpected)
+            .sink(receiveCompletion: { (completion) in
+                switch completion {
+                case .failure(let error): // CombineCheatSheet.ViewModelError
+                    print("immediateModelFailureExpected failed. \(error.message)")
+                case .finished:
+                    self.immediateModelFailureExpected = nil
+                }
+            }, receiveValue: { (_) in // CombineCheatSheet.ViewModelResponse
+                
+            })
+            
+        immediateModelAnswerExpected = combineCheatSheet.viewModelRequest(expectation: .immediateModelAnswerExpected)
+            .sink(receiveCompletion: { (completion) in
+                switch completion {
+                case .failure(_): // CombineCheatSheet.ViewModelError
+                    break
+                case .finished:
+                    self.immediateModelAnswerExpected = nil
+                }
+            }, receiveValue: { (response) in // CombineCheatSheet.ViewModelResponse
+                print("immediateModelAnswerExpected: \(response.rawValue)")
+            })
+                
+        asynchronousFailureExpected = combineCheatSheet.viewModelRequest(expectation: .asynchronousFailureExpected)
+            .sink(receiveCompletion: { (completion) in
+                switch completion {
+                case .failure(let error): // CombineCheatSheet.ViewModelError
+                    print("asynchronousFailureExpected failed. \(error.message)")
+                case .finished:
+                    self.asynchronousFailureExpected = nil
+                }
+            }, receiveValue: { (_) in // CombineCheatSheet.ViewModelResponse
+                
+            })
+                
+        asynchronousAnswerExpected = combineCheatSheet.viewModelRequest(expectation: .asynchronousAnswerExpected)
+            .sink(receiveCompletion: { (completion) in
+                switch completion {
+                case .failure(_): // CombineCheatSheet.ViewModelError
+                    break
+                case .finished:
+                    self.asynchronousAnswerExpected = nil
+                }
+            }, receiveValue: { (response) in // CombineCheatSheet.ViewModelResponse
+                print("asynchronousAnswerExpected: \(response.rawValue)")
+            })
     }
 }
