@@ -63,6 +63,10 @@ public class CombineCheatSheet {
         case asynchronousAnswerExpected
         case asynchronousFailureExpected
     }
+    
+    public init() {
+        
+    }
 
     public func modelRequest(expectation: Expectation) -> AnyPublisher<ModelResponse, ModelError> {
         switch expectation {
