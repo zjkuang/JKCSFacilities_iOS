@@ -7,12 +7,12 @@
 
 import SwiftUI
 
+public enum ImageName {
+    case inBundle(imageName: String)
+    case system(systemName: String)
+}
+
 public extension Image {
-    enum ImageName {
-        case inBundle(imageName: String)
-        case system(systemName: String)
-    }
-    
     init(imageName: ImageName) {
         switch imageName {
         case .inBundle(let name):
