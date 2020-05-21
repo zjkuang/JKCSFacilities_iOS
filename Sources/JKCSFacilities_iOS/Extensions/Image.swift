@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-extension Image {
+public extension Image {
     enum ImageName {
         case inBundle(imageName: String)
         case system(systemName: String)
