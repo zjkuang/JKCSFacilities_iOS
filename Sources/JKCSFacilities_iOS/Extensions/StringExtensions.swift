@@ -58,4 +58,12 @@ public extension String {
     static func >(lhs: String, rhs: String) -> Bool {
         return (lhs.compare(rhs) == .orderedDescending)
     }
+    
+    static func <=(lhs: String, rhs: String) -> Bool {
+        return !(lhs > rhs)
+    }
+    
+    static func >=(lhs: String, rhs: String) -> Bool {
+        return !(lhs < rhs)
+    }
 }
