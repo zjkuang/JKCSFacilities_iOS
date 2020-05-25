@@ -49,3 +49,13 @@ public extension String {
          return String(self[start...])
     }
 }
+
+public extension String {
+    static func <(lhs: String, rhs: String) -> Bool {
+        return (lhs.compare(rhs) == .orderedAscending)
+    }
+    
+    static func >(lhs: String, rhs: String) -> Bool {
+        return (lhs.compare(rhs) == .orderedDescending)
+    }
+}
