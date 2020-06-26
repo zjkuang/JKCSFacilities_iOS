@@ -5,6 +5,12 @@
 //  Created by Zhengqian Kuang on 2020-02-04.
 //
 
+
+
+// DEPRECATED
+
+
+
 import Foundation
 
 public class JKCS_DataTask: NSObject {

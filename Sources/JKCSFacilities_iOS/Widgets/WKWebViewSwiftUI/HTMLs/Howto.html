@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+    <header>
+<!-- disable touch - don't use, for it disables everything -->
+<!--        <style type="text/css">-->
+<!--        * {-->
+<!--            -webkit-touch-callout: none;-->
+<!--            -webkit-user-select: none;-->
+<!--        }-->
+<!--        </style>-->
+
+        <!-- import jquery -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+        
+        <!-- load a URL -->
+        <script>
+            window.location = "https://www.google.com";
+        </script>
+
+        <!-- catch the clicked word -->
+        <script>
+            $(document).ready(function() {
+                var p = $(".clickable");
+                p.click(function(e) {
+                    var sel_obj = window.getSelection();
+                    sel_obj.modify("move", "forward", "character");
+                    sel_obj.modify("extend", "backward", "word");
+
+                    sel_obj.modify("move", "backward", "character");
+                    sel_obj.modify("extend", "forward", "word");
+
+                    var text = sel_obj.toString().trim().toLowerCase();
+                    postMessage(text);
+                    window.getSelection().removeAllRanges();
+                    });
+                });
+        </script>
+        <script>
+            postMessage = function(text) {
+                window.webkit.messageHandlers.wordClickHandler.postMessage({ param1: text });
+            }
+        </script>
+    </header>
+    
+    <body>
+        <h1>CLICK TO PICK THE WORD</h1>
+        <br/>
+        <p class="clickable"><font size=20>Baa Baa Black Sheep<font></p>
+    </body>
+</html>
+

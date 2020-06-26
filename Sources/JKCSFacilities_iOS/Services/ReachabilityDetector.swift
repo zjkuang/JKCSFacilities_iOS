@@ -35,6 +35,10 @@ public class ReachabilityDetector: ObservableObject {
         
     }
     
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
     @discardableResult
     public func start() -> Self {
         self.detectMode = .notification
