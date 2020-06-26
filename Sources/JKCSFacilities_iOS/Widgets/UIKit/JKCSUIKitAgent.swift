@@ -16,6 +16,8 @@ public class JKCSUIKitAgent {
     public lazy var isPhone: Bool = {
         return (UIDevice.current.userInterfaceIdiom == .phone)
     }()
+    
+    public init() {}
 }
 
 public final class JKCSOrientationObservable: ObservableObject { // https://developer.apple.com/forums/thread/126878
