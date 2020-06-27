@@ -16,7 +16,7 @@ import WebKit
 // https://www.hackingwithswift.com/quick-start/swiftui/how-to-wrap-a-custom-uiview-for-swiftui
 // https://www.hackingwithswift.com/articles/112/the-ultimate-guide-to-wkwebview
 
-public struct WKWebViewSwiftUI: UIViewRepresentable {
+public struct JKCSWKWebView: UIViewRepresentable {
     let postMessageHandlers: [String]?
     let wkWebViewWrapper = WKWebViewWrapper()
     
@@ -25,11 +25,11 @@ public struct WKWebViewSwiftUI: UIViewRepresentable {
         wkWebViewWrapper.createWKWebView(postMessagehandlers: postMessageHandlers)
     }
     
-    public func makeUIView(context: UIViewRepresentableContext<WKWebViewSwiftUI>) -> WKWebView {
+    public func makeUIView(context: UIViewRepresentableContext<JKCSWKWebView>) -> WKWebView {
         return wkWebViewWrapper.wrappedValue(postMessageHandlers: postMessageHandlers)
     }
     
-    public func updateUIView(_ uiView: WKWebView, context: UIViewRepresentableContext<WKWebViewSwiftUI>) {
+    public func updateUIView(_ uiView: WKWebView, context: UIViewRepresentableContext<JKCSWKWebView>) {
         //
     }
     

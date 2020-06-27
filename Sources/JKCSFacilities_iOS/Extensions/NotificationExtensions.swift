@@ -15,4 +15,6 @@ public extension Notification.Name {
     
     static let reachabilityUpdated = Notification.Name("reachabilityUpdated")
     
+    static let JKCSImagePickerDidPickImage = Notification.Name("JKCSImagePickerDidPickImage")
+    
 }
