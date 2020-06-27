@@ -8,7 +8,7 @@
 
 import UIKit
 
-#if TARGET_OS_SIMULATOR
+#if targetEnvironment(simulator)
     public let isSimulator = true
 #else
     public let isSimulator = false
