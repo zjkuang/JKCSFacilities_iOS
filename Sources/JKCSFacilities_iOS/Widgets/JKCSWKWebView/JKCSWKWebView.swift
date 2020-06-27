@@ -33,16 +33,16 @@ public extension JKCSWKWebViewEventDelegate {
 public struct JKCSWKWebView: UIViewRepresentable {
     let postMessageHandlers: [JKCSWKWebViewEvent]?
     let wkWebViewWrapper = WKWebViewWrapper()
-    let delegate: JKCSWKWebViewEventDelegate?
+    let customDelegate: JKCSWKWebViewEventDelegate?
     
-    public init(postMessageHandlers: [JKCSWKWebViewEvent]? = nil, delegate: JKCSWKWebViewEventDelegate? = nil) {
+    public init(postMessageHandlers: [JKCSWKWebViewEvent]? = nil, customDelegate: JKCSWKWebViewEventDelegate? = nil) {
         self.postMessageHandlers = postMessageHandlers
-        wkWebViewWrapper.createWKWebView(postMessagehandlers: postMessageHandlers, delegate: delegate)
-        self.delegate = delegate
+        wkWebViewWrapper.createWKWebView(postMessagehandlers: postMessageHandlers, customDelegate: customDelegate)
+        self.customDelegate = customDelegate
     }
     
     public func makeUIView(context: UIViewRepresentableContext<JKCSWKWebView>) -> WKWebView {
-        return wkWebViewWrapper.wrappedValue(postMessageHandlers: postMessageHandlers, delegate: delegate)
+        return wkWebViewWrapper.wrappedValue(postMessageHandlers: postMessageHandlers, customDelegate: customDelegate)
     }
     
     public func updateUIView(_ uiView: WKWebView, context: UIViewRepresentableContext<JKCSWKWebView>) {
@@ -127,9 +127,9 @@ public struct JKCSWKWebView: UIViewRepresentable {
 
     class WKWebViewWrapper: UIViewController, WKNavigationDelegate, WKUIDelegate, WKScriptMessageHandler {
         private var wkWebView: WKWebView? = nil
-        private var delegate: JKCSWKWebViewEventDelegate? = nil
+        private var customDelegate: JKCSWKWebViewEventDelegate? = nil
         
-        @discardableResult func createWKWebView(postMessagehandlers: [JKCSWKWebViewEvent]? = nil, delegate: JKCSWKWebViewEventDelegate? = nil) -> WKWebView {
+        @discardableResult func createWKWebView(postMessagehandlers: [JKCSWKWebViewEvent]? = nil, customDelegate: JKCSWKWebViewEventDelegate? = nil) -> WKWebView {
             let config = WKWebViewConfiguration()
             // config.preferences.javaScriptEnabled = true
             // config.dataDetectorTypes = [.address, .calendarEvent, .flightNumber, .link, .lookupSuggestion, .phoneNumber, .trackingNumber]
@@ -147,14 +147,14 @@ public struct JKCSWKWebView: UIViewRepresentable {
             wkWebView?.addObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress), options: .new, context: nil)
             wkWebView?.addObserver(self, forKeyPath: #keyPath(WKWebView.title), options: .new, context: nil)
             
-            self.delegate = delegate
+            self.customDelegate = customDelegate
             
             return wkWebView!
         }
         
-        func wrappedValue(postMessageHandlers: [JKCSWKWebViewEvent]? = nil, delegate: JKCSWKWebViewEventDelegate? = nil) -> WKWebView {
+        func wrappedValue(postMessageHandlers: [JKCSWKWebViewEvent]? = nil, customDelegate: JKCSWKWebViewEventDelegate? = nil) -> WKWebView {
             if wkWebView == nil {
-                createWKWebView(postMessagehandlers: postMessageHandlers, delegate: delegate)
+                createWKWebView(postMessagehandlers: postMessageHandlers, customDelegate: customDelegate)
             }
             return wkWebView!
         }
@@ -177,7 +177,7 @@ public struct JKCSWKWebView: UIViewRepresentable {
                     return
                 }
                 print("clicked word: \(param1)")
-                delegate?.didHappen(event: .wordClickHandler, info: param1)
+                customDelegate?.didHappen(event: .wordClickHandler, info: param1)
             }
         }
         
